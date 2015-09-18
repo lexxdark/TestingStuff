@@ -72,9 +72,8 @@ namespace Experiments
             WeakReference weakRefTargetClass = new WeakReference(targetClass);
 
             targetClass = null;
-            GC.Collect();
+            GCHelper.ForceAndWaitGarbageCollection();
 
-            Thread.Sleep(100);
             Assert.False(weakRefTargetClass.IsAlive);
         }
 
@@ -87,10 +86,9 @@ namespace Experiments
             SomeDelegate d = targetClass.GetStrongReferenceDelegate();
             string actualTextResultFromCall = d();
             targetClass = null;
-            GC.Collect();
+            GCHelper.ForceAndWaitGarbageCollection();
 
-            Thread.Sleep(100);
-            Assert.True(weakRefTargetClass.IsAlive);
+            Assert.False(weakRefTargetClass.IsAlive);
             //we also make sure the call to the method is done
             Assert.Equal(ExpectedText, actualTextResultFromCall);
         }
@@ -104,8 +102,7 @@ namespace Experiments
             SomeDelegate d = targetClass.GetWeakReferenceDelegate();
             string actualTextResultFromCall = d();
             targetClass = null;
-            GC.Collect();
-            Thread.Sleep(100);
+            GCHelper.ForceAndWaitGarbageCollection();
             
             Assert.False(weakRefTargetClass.IsAlive);
             //we also make sure the call to the method is done
@@ -121,8 +118,7 @@ namespace Experiments
             SomeDelegate d = targetClass.GetWeakReferenceDelegateSafe();
             string actualTextResultFromCall = d();
             targetClass = null;
-            GC.Collect();
-            Thread.Sleep(100);
+            GCHelper.ForceAndWaitGarbageCollection();
 
             Assert.False(weakRefTargetClass.IsAlive);
             //we also make sure the call to the method is done

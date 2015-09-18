@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DelegateTests.cs" />
+    <Compile Include="GCHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeakReferenceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
